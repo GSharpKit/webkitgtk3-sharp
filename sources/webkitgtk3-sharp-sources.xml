@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<gapi-parser-input>
+  <api filename="webkitgtk3-sharp-api.raw">
+    <library name="webkitgtk-3.0">
+      <namespace name="WebKit">
+        <!--<dir>/usr/include/webkitgtk-3.0/webkit</dir>-->
+        <dir>webkitgtk-3.0/webkit</dir>
+      </namespace>
+    </library>
+  </api>
+</gapi-parser-input>
