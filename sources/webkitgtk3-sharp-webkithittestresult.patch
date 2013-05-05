@@ -1,0 +1,13 @@
+diff -Nur webkitgtk-3.0/webkit/webkithittestresult.h webkitgtk-3.0/webkit/webkithittestresult.h
+--- webkitgtk-3.0/webkit/webkithittestresult.h	2010-06-03 14:33:49.123059968 +0200
++++ webkitgtk-3.0/webkit/webkithittestresult.h	2010-06-03 14:34:30.801430444 +0200
+@@ -74,8 +74,7 @@
+     WEBKIT_HIT_TEST_RESULT_CONTEXT_EDITABLE   = 1 << 6,
+ } WebKitHitTestResultContext;
+ 
+-GType
+-webkit_hit_test_result_get_type (void);
++GType webkit_hit_test_result_get_type (void);
+ 
+ G_END_DECLS
+ 

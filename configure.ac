@@ -1,4 +1,4 @@
-AC_INIT([webkitgtk3-sharp], [1.4.0])
+AC_INIT([webkitgtk3-sharp], [2.0.1])
 AC_CONFIG_SRCDIR([README])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
@@ -152,7 +152,7 @@ AM_CONDITIONAL(ENABLE_MONODOC, test "x$enable_monodoc" = "xyes")
 
 AC_CONFIG_FILES([
 	Makefile
-	webkit-sharp.spec
+	webkitgtk3-sharp.spec
 	doc/Makefile
 	samples/Makefile
 	sources/Makefile
