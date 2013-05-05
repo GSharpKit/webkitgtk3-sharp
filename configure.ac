@@ -86,14 +86,14 @@ AC_SUBST(LIB_PREFIX)
 AC_SUBST(LIB_SUFFIX)
 
 dnl Check for gtk-sharp
-PKG_CHECK_MODULES(GTK_SHARP, gtk-sharp-3.0 >= 1.9.0)
+PKG_CHECK_MODULES(GTK_SHARP, gtk-sharp-3.0 >= 3.6.0)
 AC_SUBST(GTK_SHARP_CFLAGS)
 AC_SUBST(GTK_SHARP_LIBS)
 gtksharp_prefix=`pkg-config --variable=prefix gtk-sharp-3.0`
 AC_SUBST(gtksharp_prefix)
 
 dnl Check for WebKit
-PKG_CHECK_MODULES(WEBKIT, webkitgtk-3.0 >= 1.1.15)
+PKG_CHECK_MODULES(WEBKIT, webkitgtk-3.0 >= 1.10.0)
 AC_SUBST(WEBKIT_LIBS)
 webkit_prefix=`pkg-config --variable=prefix webkitgtk-3.0`
 AC_SUBST(webkit_prefix)

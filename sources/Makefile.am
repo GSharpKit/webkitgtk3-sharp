@@ -34,12 +34,16 @@ get-sources:
 	@for file in webkitgtk-3.0/webkit/*.h; do                  \
 		sed -i -e 's,^WEBKIT_API ,,' $$file; \
 	done
+	@for file in webkitgtk-3.0/webkitdom/*.h; do                  \
+		sed -i -e 's,^WEBKIT_API ,,' $$file; \
+	done
 	@for file in webkitgtk-3.0/JavaScriptCore/*.h; do        \
 		sed -i -e 's,^JS_EXPORT ,,' $$file; \
 	done
 	cd webkitgtk-3.0
 	patch -p0 < webkitgtk3-sharp-webkithittestresult.patch
 	cd .. 
+
 
 api: get-sources
 	PERLLIB=$(GTKSHARP_PREFIX)/share/perl5 \

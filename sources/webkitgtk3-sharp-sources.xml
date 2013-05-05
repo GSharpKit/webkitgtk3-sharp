@@ -5,6 +5,7 @@
       <namespace name="WebKit">
         <!--<dir>/usr/include/webkitgtk-3.0/webkit</dir>-->
         <dir>webkitgtk-3.0/webkit</dir>
+        <dir>webkitgtk-3.0/webkitdom</dir>
       </namespace>
     </library>
   </api>
