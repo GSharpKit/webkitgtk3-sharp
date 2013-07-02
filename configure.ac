@@ -37,17 +37,22 @@ PKG_CHECK_MODULES(MONO_DEPENDENCY, mono >= 1.0, has_mono=true, has_mono=false)
 PKG_CHECK_MODULES(MONO_DEPENDENCY, mint >= 1.0, has_mint=true, has_mint=false)
 
 if test "x$has_mono" = "xtrue"; then
-	if test `uname -s` = "Darwin"; then
-		AC_PATH_PROG(RUNTIME, mono, no)
-		AC_PATH_PROG(CSC, mcs, no)
-		LIB_PREFIX=
-		LIB_SUFFIX=.dylib
-	else
-		AC_PATH_PROG(RUNTIME, mono, no)
-		AC_PATH_PROG(CSC, mcs, no)
-		LIB_PREFIX=.so
-		LIB_SUFFIX=
-	fi
+	AC_PATH_PROG(RUNTIME, mono, no)
+	AC_PATH_PROG(CSC, mcs, no)
+	case "$host" in
+		*-*-mingw*|*-*-cygwin*)
+			LIB_PREFIX=-
+			LIB_SUFFIX=.dll
+			;;
+		*-*-darwin*)
+			LIB_PREFIX=.
+			LIB_SUFFIX=.dylib
+			;;
+		*)
+			LIB_PREFIX=.so.
+			LIB_SUFFIX=
+			;;
+	esac
 else
 	if test "x$has_mint" = "xtrue"; then
 		AC_PATH_PROG(RUNTIME, mint, no)
