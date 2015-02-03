@@ -1,5 +1,5 @@
 
-pkgconfigdir = $(libdir)/pkgconfig
+pkgconfigdir = $(datadir)/pkgconfig
 pkgconfig_DATA = $(ASSEMBLY_PC).pc
 
 RAW_API=$(ASSEMBLY_NAME)-api.raw
@@ -36,6 +36,7 @@ get-sources:
 	done
 	@for file in webkitgtk-3.0/webkitdom/*.h; do                  \
 		sed -i -e 's,^WEBKIT_API ,,' $$file; \
+		sed -i -e 's,^WEBKIT_DEPRECATED ,,' $$file; \
 	done
 	@for file in webkitgtk-3.0/JavaScriptCore/*.h; do        \
 		sed -i -e 's,^JS_EXPORT ,,' $$file; \
@@ -62,7 +63,7 @@ generated-stamp: $(API)
 
 $(ASSEMBLY_NAME).dll: $(build_sources) generated-stamp
 	$(CSC) -nowarn:169 -unsafe -target:library $(GTK_SHARP_LIBS) \
-		$(build_sources) generated/*.cs -out:$(ASSEMBLY_NAME).dll
+		$(build_sources) generated/*/*.cs -out:$(ASSEMBLY_NAME).dll
 
 install-data-local:
 	echo "$(GACUTIL) /i $(ASSEMBLY_NAME).dll /f $(GACUTIL_FLAGS)";  \
