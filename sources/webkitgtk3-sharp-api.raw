@@ -152,7 +152,7 @@
         <method vm="remove_event_listener" />
       </class_struct>
       <virtual_method name="DispatchEvent" cname="dispatch_event">
-        <return-type type="gboolean" />
+        <return-type type="void" />
         <parameters>
           <parameter type="WebKitDOMEvent*" name="event" />
           <parameter type="GError**" name="error" />
@@ -162,16 +162,17 @@
         <return-type type="gboolean" />
         <parameters>
           <parameter type="const-char*" name="event_name" />
-          <parameter type="GClosure*" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
+          <parameter type="GCallback" name="handler" />
+          <parameter type="gboolean" name="bubble" />
+          <parameter type="gpointer" name="user_data" />
         </parameters>
       </virtual_method>
       <virtual_method name="RemoveEventListener" cname="remove_event_listener">
         <return-type type="gboolean" />
         <parameters>
           <parameter type="const-char*" name="event_name" />
-          <parameter type="GClosure*" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
+          <parameter type="GCallback" name="handler" />
+          <parameter type="gboolean" name="bubble" />
         </parameters>
       </virtual_method>
       <method name="AddEventListener" cname="webkit_dom_event_target_add_event_listener">
@@ -179,20 +180,12 @@
         <parameters>
           <parameter type="const-char*" name="event_name" />
           <parameter type="GCallback" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
+          <parameter type="gboolean" name="bubble" />
           <parameter type="gpointer" name="user_data" />
         </parameters>
       </method>
-      <method name="AddEventListenerWithClosure" cname="webkit_dom_event_target_add_event_listener_with_closure">
-        <return-type type="gboolean" />
-        <parameters>
-          <parameter type="const-char*" name="event_name" />
-          <parameter type="GClosure*" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
-        </parameters>
-      </method>
       <method name="DispatchEvent" cname="webkit_dom_event_target_dispatch_event">
-        <return-type type="gboolean" />
+        <return-type type="void" />
         <parameters>
           <parameter type="WebKitDOMEvent*" name="event" />
           <parameter type="GError**" name="error" />
@@ -206,15 +199,7 @@
         <parameters>
           <parameter type="const-char*" name="event_name" />
           <parameter type="GCallback" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
-        </parameters>
-      </method>
-      <method name="RemoveEventListenerWithClosure" cname="webkit_dom_event_target_remove_event_listener_with_closure">
-        <return-type type="gboolean" />
-        <parameters>
-          <parameter type="const-char*" name="event_name" />
-          <parameter type="GClosure*" name="handler" />
-          <parameter type="gboolean" name="use_capture" />
+          <parameter type="gboolean" name="bubble" />
         </parameters>
       </method>
     </interface>
@@ -281,6 +266,13 @@
       <class_struct cname="WebKitDOMAudioTrackListClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_audio_track_list_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetLength" cname="webkit_dom_audio_track_list_get_length">
         <return-type type="gulong" />
       </method>
@@ -315,6 +307,13 @@
       <class_struct cname="WebKitDOMBatteryManagerClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_battery_manager_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="event" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetCharging" cname="webkit_dom_battery_manager_get_charging">
         <return-type type="gboolean" />
       </method>
@@ -347,6 +346,14 @@
           <parameter type="gint64" name="start" />
           <parameter type="gint64" name="end" />
           <parameter type="const-gchar*" name="contentType" />
+        </parameters>
+      </method>
+      <method name="WebkitSlice" cname="webkit_dom_blob_webkit_slice">
+        <return-type type="WebKitDOMBlob*" />
+        <parameters>
+          <parameter type="gint64" name="start" />
+          <parameter type="gint64" name="end" />
+          <parameter type="const-gchar*" name="content_type" />
         </parameters>
       </method>
     </object>
@@ -437,7 +444,7 @@
       <class_struct cname="WebKitDOMConsoleClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
-      <method name="GetMemory" cname="webkit_dom_console_get_memory" deprecated="1">
+      <method name="GetMemory" cname="webkit_dom_console_get_memory">
         <return-type type="void*" />
       </method>
       <method name="GetType" cname="webkit_dom_console_get_type" shared="true">
@@ -507,7 +514,7 @@
       <method name="GetParentRule" cname="webkit_dom_css_style_declaration_get_parent_rule">
         <return-type type="WebKitDOMCSSRule*" />
       </method>
-      <method name="GetPropertyCssValue" cname="webkit_dom_css_style_declaration_get_property_css_value" deprecated="1">
+      <method name="GetPropertyCssValue" cname="webkit_dom_css_style_declaration_get_property_css_value">
         <return-type type="WebKitDOMCSSValue*" />
         <parameters>
           <parameter type="const-gchar*" name="propertyName" />
@@ -772,23 +779,6 @@
           <parameter type="const-gchar*" name="data" />
         </parameters>
       </method>
-      <method name="CreateTouch" cname="webkit_dom_document_create_touch">
-        <return-type type="WebKitDOMTouch*" />
-        <parameters>
-          <parameter type="WebKitDOMDOMWindow*" name="window" />
-          <parameter type="WebKitDOMEventTarget*" name="target" />
-          <parameter type="glong" name="identifier" />
-          <parameter type="glong" name="pageX" />
-          <parameter type="glong" name="pageY" />
-          <parameter type="glong" name="screenX" />
-          <parameter type="glong" name="screenY" />
-          <parameter type="glong" name="webkitRadiusX" />
-          <parameter type="glong" name="webkitRadiusY" />
-          <parameter type="gfloat" name="webkitRotationAngle" />
-          <parameter type="gfloat" name="webkitForce" />
-          <parameter type="GError**" name="error" />
-        </parameters>
-      </method>
       <method name="CreateTreeWalker" cname="webkit_dom_document_create_tree_walker">
         <return-type type="WebKitDOMTreeWalker*" />
         <parameters>
@@ -956,9 +946,6 @@
       <method name="GetType" cname="webkit_dom_document_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="GetUrl" cname="webkit_dom_document_get_url">
-        <return-type type="gchar*" />
-      </method>
       <method name="GetVisibilityState" cname="webkit_dom_document_get_visibility_state">
         <return-type type="gchar*" />
       </method>
@@ -974,7 +961,7 @@
       <method name="GetWebkitFullscreenEnabled" cname="webkit_dom_document_get_webkit_fullscreen_enabled">
         <return-type type="gboolean" />
       </method>
-      <method name="GetWebkitHidden" cname="webkit_dom_document_get_webkit_hidden" deprecated="1">
+      <method name="GetWebkitHidden" cname="webkit_dom_document_get_webkit_hidden">
         <return-type type="gboolean" />
       </method>
       <method name="GetWebkitIsFullScreen" cname="webkit_dom_document_get_webkit_is_full_screen">
@@ -983,7 +970,7 @@
       <method name="GetWebkitPointerLockElement" cname="webkit_dom_document_get_webkit_pointer_lock_element">
         <return-type type="WebKitDOMElement*" />
       </method>
-      <method name="GetWebkitVisibilityState" cname="webkit_dom_document_get_webkit_visibility_state" deprecated="1">
+      <method name="GetWebkitVisibilityState" cname="webkit_dom_document_get_webkit_visibility_state">
         <return-type type="gchar*" />
       </method>
       <method name="GetXmlEncoding" cname="webkit_dom_document_get_xml_encoding">
@@ -1172,6 +1159,13 @@
       </class_struct>
       <method name="Abort" cname="webkit_dom_dom_application_cache_abort">
         <return-type type="void" />
+      </method>
+      <method name="DispatchEvent" cname="webkit_dom_dom_application_cache_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
       </method>
       <method name="GetStatus" cname="webkit_dom_dom_application_cache_get_status">
         <return-type type="gushort" />
@@ -1725,6 +1719,13 @@
           <parameter type="const-gchar*" name="message" />
         </parameters>
       </method>
+      <method name="DispatchEvent" cname="webkit_dom_dom_window_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="Find" cname="webkit_dom_dom_window_find">
         <return-type type="gboolean" />
         <parameters>
@@ -2154,6 +2155,9 @@
       </method>
       <method name="GetType" cname="webkit_dom_element_get_type" shared="true">
         <return-type type="GType" />
+      </method>
+      <method name="GetWebkitRegionOverflow" cname="webkit_dom_element_get_webkit_region_overflow">
+        <return-type type="gchar*" />
       </method>
       <method name="GetWebkitRegionOverset" cname="webkit_dom_element_get_webkit_region_overset">
         <return-type type="gchar*" />
@@ -3417,7 +3421,7 @@
       <method name="HasFocus" cname="webkit_dom_html_document_has_focus">
         <return-type type="gboolean" />
       </method>
-      <method name="Open" cname="webkit_dom_html_document_open" deprecated="1">
+      <method name="Open" cname="webkit_dom_html_document_open">
         <return-type type="void" />
       </method>
       <method name="ReleaseEvents" cname="webkit_dom_html_document_release_events">
@@ -3479,6 +3483,12 @@
       <method name="GetChildren" cname="webkit_dom_html_element_get_children">
         <return-type type="WebKitDOMHTMLCollection*" />
       </method>
+      <method name="GetClassList" cname="webkit_dom_html_element_get_class_list">
+        <return-type type="WebKitDOMDOMTokenList*" />
+      </method>
+      <method name="GetClassName" cname="webkit_dom_html_element_get_class_name">
+        <return-type type="gchar*" />
+      </method>
       <method name="GetContentEditable" cname="webkit_dom_html_element_get_content_editable">
         <return-type type="gchar*" />
       </method>
@@ -3491,6 +3501,9 @@
       <method name="GetHidden" cname="webkit_dom_html_element_get_hidden">
         <return-type type="gboolean" />
       </method>
+      <method name="GetId" cname="webkit_dom_html_element_get_id">
+        <return-type type="gchar*" />
+      </method>
       <method name="GetInnerHtml" cname="webkit_dom_html_element_get_inner_html">
         <return-type type="gchar*" />
       </method>
@@ -3500,19 +3513,19 @@
       <method name="GetIsContentEditable" cname="webkit_dom_html_element_get_is_content_editable">
         <return-type type="gboolean" />
       </method>
-      <method name="GetItemId" cname="webkit_dom_html_element_get_item_id" deprecated="1">
+      <method name="GetItemId" cname="webkit_dom_html_element_get_item_id">
         <return-type type="gchar*" />
       </method>
-      <method name="GetItemProp" cname="webkit_dom_html_element_get_item_prop" deprecated="1">
+      <method name="GetItemProp" cname="webkit_dom_html_element_get_item_prop">
         <return-type type="WebKitDOMDOMSettableTokenList*" />
       </method>
-      <method name="GetItemRef" cname="webkit_dom_html_element_get_item_ref" deprecated="1">
+      <method name="GetItemRef" cname="webkit_dom_html_element_get_item_ref">
         <return-type type="WebKitDOMDOMSettableTokenList*" />
       </method>
-      <method name="GetItemScope" cname="webkit_dom_html_element_get_item_scope" deprecated="1">
+      <method name="GetItemScope" cname="webkit_dom_html_element_get_item_scope">
         <return-type type="gboolean" />
       </method>
-      <method name="GetItemType" cname="webkit_dom_html_element_get_item_type" deprecated="1">
+      <method name="GetItemType" cname="webkit_dom_html_element_get_item_type">
         <return-type type="void*" />
       </method>
       <method name="GetLang" cname="webkit_dom_html_element_get_lang">
@@ -3572,6 +3585,12 @@
           <parameter type="const-gchar*" name="value" />
         </parameters>
       </method>
+      <method name="SetClassName" cname="webkit_dom_html_element_set_class_name">
+        <return-type type="void" />
+        <parameters>
+          <parameter type="const-gchar*" name="value" />
+        </parameters>
+      </method>
       <method name="SetContentEditable" cname="webkit_dom_html_element_set_content_editable">
         <return-type type="void" />
         <parameters>
@@ -3597,6 +3616,12 @@
           <parameter type="gboolean" name="value" />
         </parameters>
       </method>
+      <method name="SetId" cname="webkit_dom_html_element_set_id">
+        <return-type type="void" />
+        <parameters>
+          <parameter type="const-gchar*" name="value" />
+        </parameters>
+      </method>
       <method name="SetInnerHtml" cname="webkit_dom_html_element_set_inner_html">
         <return-type type="void" />
         <parameters>
@@ -3611,13 +3636,13 @@
           <parameter type="GError**" name="error" />
         </parameters>
       </method>
-      <method name="SetItemId" cname="webkit_dom_html_element_set_item_id" deprecated="1">
+      <method name="SetItemId" cname="webkit_dom_html_element_set_item_id">
         <return-type type="void" />
         <parameters>
           <parameter type="const-gchar*" name="value" />
         </parameters>
       </method>
-      <method name="SetItemScope" cname="webkit_dom_html_element_set_item_scope" deprecated="1">
+      <method name="SetItemScope" cname="webkit_dom_html_element_set_item_scope">
         <return-type type="void" />
         <parameters>
           <parameter type="gboolean" name="value" />
@@ -3819,10 +3844,10 @@
       <method name="CheckValidity" cname="webkit_dom_html_form_element_check_validity">
         <return-type type="gboolean" />
       </method>
-      <method name="DispatchFormChange" cname="webkit_dom_html_form_element_dispatch_form_change" deprecated="1">
+      <method name="DispatchFormChange" cname="webkit_dom_html_form_element_dispatch_form_change">
         <return-type type="void" />
       </method>
-      <method name="DispatchFormInput" cname="webkit_dom_html_form_element_dispatch_form_input" deprecated="1">
+      <method name="DispatchFormInput" cname="webkit_dom_html_form_element_dispatch_form_input">
         <return-type type="void" />
       </method>
       <method name="GetAcceptCharset" cname="webkit_dom_html_form_element_get_accept_charset">
@@ -3831,14 +3856,8 @@
       <method name="GetAction" cname="webkit_dom_html_form_element_get_action">
         <return-type type="gchar*" />
       </method>
-      <method name="GetAutocapitalize" cname="webkit_dom_html_form_element_get_autocapitalize">
-        <return-type type="gchar*" />
-      </method>
       <method name="GetAutocomplete" cname="webkit_dom_html_form_element_get_autocomplete">
         <return-type type="gchar*" />
-      </method>
-      <method name="GetAutocorrect" cname="webkit_dom_html_form_element_get_autocorrect">
-        <return-type type="gboolean" />
       </method>
       <method name="GetElements" cname="webkit_dom_html_form_element_get_elements">
         <return-type type="WebKitDOMHTMLCollection*" />
@@ -3882,22 +3901,10 @@
           <parameter type="const-gchar*" name="value" />
         </parameters>
       </method>
-      <method name="SetAutocapitalize" cname="webkit_dom_html_form_element_set_autocapitalize">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
       <method name="SetAutocomplete" cname="webkit_dom_html_form_element_set_autocomplete">
         <return-type type="void" />
         <parameters>
           <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
-      <method name="SetAutocorrect" cname="webkit_dom_html_form_element_set_autocorrect">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gboolean" name="value" />
         </parameters>
       </method>
       <method name="SetEncoding" cname="webkit_dom_html_form_element_set_encoding">
@@ -4423,14 +4430,8 @@
       <method name="GetAlt" cname="webkit_dom_html_input_element_get_alt">
         <return-type type="gchar*" />
       </method>
-      <method name="GetAutocapitalize" cname="webkit_dom_html_input_element_get_autocapitalize">
-        <return-type type="gchar*" />
-      </method>
       <method name="GetAutocomplete" cname="webkit_dom_html_input_element_get_autocomplete">
         <return-type type="gchar*" />
-      </method>
-      <method name="GetAutocorrect" cname="webkit_dom_html_input_element_get_autocorrect">
-        <return-type type="gboolean" />
       </method>
       <method name="GetAutofocus" cname="webkit_dom_html_input_element_get_autofocus">
         <return-type type="gboolean" />
@@ -4582,22 +4583,10 @@
           <parameter type="const-gchar*" name="value" />
         </parameters>
       </method>
-      <method name="SetAutocapitalize" cname="webkit_dom_html_input_element_set_autocapitalize">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
       <method name="SetAutocomplete" cname="webkit_dom_html_input_element_set_autocomplete">
         <return-type type="void" />
         <parameters>
           <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
-      <method name="SetAutocorrect" cname="webkit_dom_html_input_element_set_autocorrect">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gboolean" name="value" />
         </parameters>
       </method>
       <method name="SetAutofocus" cname="webkit_dom_html_input_element_set_autofocus">
@@ -5193,38 +5182,17 @@
       <class_struct cname="WebKitDOMHTMLMediaElementClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMHTMLElementClass" />
       </class_struct>
-      <method name="AddTextTrack" cname="webkit_dom_html_media_element_add_text_track">
-        <return-type type="WebKitDOMTextTrack*" />
-        <parameters>
-          <parameter type="const-gchar*" name="kind" />
-          <parameter type="const-gchar*" name="label" />
-          <parameter type="const-gchar*" name="language" />
-          <parameter type="GError**" name="error" />
-        </parameters>
-      </method>
       <method name="CanPlayType" cname="webkit_dom_html_media_element_can_play_type">
         <return-type type="gchar*" />
         <parameters>
           <parameter type="const-gchar*" name="type" />
         </parameters>
       </method>
-      <method name="FastSeek" cname="webkit_dom_html_media_element_fast_seek">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gdouble" name="time" />
-        </parameters>
-      </method>
-      <method name="GetAudioTracks" cname="webkit_dom_html_media_element_get_audio_tracks">
-        <return-type type="WebKitDOMAudioTrackList*" />
-      </method>
       <method name="GetAutoplay" cname="webkit_dom_html_media_element_get_autoplay">
         <return-type type="gboolean" />
       </method>
       <method name="GetBuffered" cname="webkit_dom_html_media_element_get_buffered">
         <return-type type="WebKitDOMTimeRanges*" />
-      </method>
-      <method name="GetController" cname="webkit_dom_html_media_element_get_controller">
-        <return-type type="WebKitDOMMediaController*" />
       </method>
       <method name="GetControls" cname="webkit_dom_html_media_element_get_controls">
         <return-type type="gboolean" />
@@ -5250,7 +5218,7 @@
       <method name="GetError" cname="webkit_dom_html_media_element_get_error">
         <return-type type="WebKitDOMMediaError*" />
       </method>
-      <method name="GetInitialTime" cname="webkit_dom_html_media_element_get_initial_time" deprecated="1">
+      <method name="GetInitialTime" cname="webkit_dom_html_media_element_get_initial_time">
         <return-type type="gdouble" />
       </method>
       <method name="GetLoop" cname="webkit_dom_html_media_element_get_loop">
@@ -5289,17 +5257,11 @@
       <method name="GetSrc" cname="webkit_dom_html_media_element_get_src">
         <return-type type="gchar*" />
       </method>
-      <method name="GetStartTime" cname="webkit_dom_html_media_element_get_start_time" deprecated="1">
+      <method name="GetStartTime" cname="webkit_dom_html_media_element_get_start_time">
         <return-type type="gdouble" />
-      </method>
-      <method name="GetTextTracks" cname="webkit_dom_html_media_element_get_text_tracks">
-        <return-type type="WebKitDOMTextTrackList*" />
       </method>
       <method name="GetType" cname="webkit_dom_html_media_element_get_type" shared="true">
         <return-type type="GType" />
-      </method>
-      <method name="GetVideoTracks" cname="webkit_dom_html_media_element_get_video_tracks">
-        <return-type type="WebKitDOMVideoTrackList*" />
       </method>
       <method name="GetVolume" cname="webkit_dom_html_media_element_get_volume">
         <return-type type="gdouble" />
@@ -5308,9 +5270,6 @@
         <return-type type="gulong" />
       </method>
       <method name="GetWebkitClosedCaptionsVisible" cname="webkit_dom_html_media_element_get_webkit_closed_captions_visible">
-        <return-type type="gboolean" />
-      </method>
-      <method name="GetWebkitCurrentPlaybackTargetIsWireless" cname="webkit_dom_html_media_element_get_webkit_current_playback_target_is_wireless">
         <return-type type="gboolean" />
       </method>
       <method name="GetWebkitHasClosedCaptions" cname="webkit_dom_html_media_element_get_webkit_has_closed_captions">
@@ -5416,9 +5375,6 @@
         <parameters>
           <parameter type="gboolean" name="value" />
         </parameters>
-      </method>
-      <method name="WebkitShowPlaybackTargetPicker" cname="webkit_dom_html_media_element_webkit_show_playback_target_picker">
-        <return-type type="void" />
       </method>
     </object>
     <object name="DOMHTMLMenuElement" cname="WebKitDOMHTMLMenuElement" parent="WebKitDOMHTMLElement">
@@ -5679,9 +5635,6 @@
       <class_struct cname="WebKitDOMHTMLOptionsCollectionClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMHTMLCollectionClass" />
       </class_struct>
-      <method name="GetLength" cname="webkit_dom_html_options_collection_get_length">
-        <return-type type="gulong" />
-      </method>
       <method name="GetSelectedIndex" cname="webkit_dom_html_options_collection_get_selected_index">
         <return-type type="glong" />
       </method>
@@ -6129,7 +6082,7 @@
       <method name="GetMedia" cname="webkit_dom_html_style_element_get_media">
         <return-type type="gchar*" />
       </method>
-      <method name="GetScoped" cname="webkit_dom_html_style_element_get_scoped" deprecated="1">
+      <method name="GetScoped" cname="webkit_dom_html_style_element_get_scoped">
         <return-type type="gboolean" />
       </method>
       <method name="GetSheet" cname="webkit_dom_html_style_element_get_sheet">
@@ -6150,7 +6103,7 @@
           <parameter type="const-gchar*" name="value" />
         </parameters>
       </method>
-      <method name="SetScoped" cname="webkit_dom_html_style_element_set_scoped" deprecated="1">
+      <method name="SetScoped" cname="webkit_dom_html_style_element_set_scoped">
         <return-type type="void" />
         <parameters>
           <parameter type="gboolean" name="value" />
@@ -6677,12 +6630,6 @@
       <method name="CheckValidity" cname="webkit_dom_html_text_area_element_check_validity">
         <return-type type="gboolean" />
       </method>
-      <method name="GetAutocapitalize" cname="webkit_dom_html_text_area_element_get_autocapitalize">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetAutocorrect" cname="webkit_dom_html_text_area_element_get_autocorrect">
-        <return-type type="gboolean" />
-      </method>
       <method name="GetAutofocus" cname="webkit_dom_html_text_area_element_get_autofocus">
         <return-type type="gboolean" />
       </method>
@@ -6757,18 +6704,6 @@
       </method>
       <method name="Select" cname="webkit_dom_html_text_area_element_select">
         <return-type type="void" />
-      </method>
-      <method name="SetAutocapitalize" cname="webkit_dom_html_text_area_element_set_autocapitalize">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
-      <method name="SetAutocorrect" cname="webkit_dom_html_text_area_element_set_autocorrect">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gboolean" name="value" />
-        </parameters>
       </method>
       <method name="SetAutofocus" cname="webkit_dom_html_text_area_element_set_autofocus">
         <return-type type="void" />
@@ -6940,9 +6875,6 @@
       <method name="GetWebkitSupportsFullscreen" cname="webkit_dom_html_video_element_get_webkit_supports_fullscreen">
         <return-type type="gboolean" />
       </method>
-      <method name="GetWebkitWirelessVideoPlaybackDisabled" cname="webkit_dom_html_video_element_get_webkit_wireless_video_playback_disabled">
-        <return-type type="gboolean" />
-      </method>
       <method name="GetWidth" cname="webkit_dom_html_video_element_get_width">
         <return-type type="gulong" />
       </method>
@@ -6956,12 +6888,6 @@
         <return-type type="void" />
         <parameters>
           <parameter type="const-gchar*" name="value" />
-        </parameters>
-      </method>
-      <method name="SetWebkitWirelessVideoPlaybackDisabled" cname="webkit_dom_html_video_element_set_webkit_wireless_video_playback_disabled">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gboolean" name="value" />
         </parameters>
       </method>
       <method name="SetWidth" cname="webkit_dom_html_video_element_set_width">
@@ -7047,116 +6973,11 @@
       <method name="GetAncestorOrigins" cname="webkit_dom_location_get_ancestor_origins">
         <return-type type="WebKitDOMDOMStringList*" />
       </method>
-      <method name="GetHash" cname="webkit_dom_location_get_hash">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetHost" cname="webkit_dom_location_get_host">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetHostname" cname="webkit_dom_location_get_hostname">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetHref" cname="webkit_dom_location_get_href">
-        <return-type type="gchar*" />
-      </method>
       <method name="GetOrigin" cname="webkit_dom_location_get_origin">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetPathname" cname="webkit_dom_location_get_pathname">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetPort" cname="webkit_dom_location_get_port">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetProtocol" cname="webkit_dom_location_get_protocol">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetSearch" cname="webkit_dom_location_get_search">
         <return-type type="gchar*" />
       </method>
       <method name="GetType" cname="webkit_dom_location_get_type" shared="true">
         <return-type type="GType" />
-      </method>
-    </object>
-    <object name="DOMMediaController" cname="WebKitDOMMediaController" parent="WebKitDOMObject">
-      <class_struct cname="WebKitDOMMediaControllerClass">
-        <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
-      </class_struct>
-      <method name="GetBuffered" cname="webkit_dom_media_controller_get_buffered">
-        <return-type type="WebKitDOMTimeRanges*" />
-      </method>
-      <method name="GetCurrentTime" cname="webkit_dom_media_controller_get_current_time">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetDefaultPlaybackRate" cname="webkit_dom_media_controller_get_default_playback_rate">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetDuration" cname="webkit_dom_media_controller_get_duration">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetMuted" cname="webkit_dom_media_controller_get_muted">
-        <return-type type="gboolean" />
-      </method>
-      <method name="GetPaused" cname="webkit_dom_media_controller_get_paused">
-        <return-type type="gboolean" />
-      </method>
-      <method name="GetPlaybackRate" cname="webkit_dom_media_controller_get_playback_rate">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetPlaybackState" cname="webkit_dom_media_controller_get_playback_state">
-        <return-type type="gchar*" />
-      </method>
-      <method name="GetPlayed" cname="webkit_dom_media_controller_get_played">
-        <return-type type="WebKitDOMTimeRanges*" />
-      </method>
-      <method name="GetSeekable" cname="webkit_dom_media_controller_get_seekable">
-        <return-type type="WebKitDOMTimeRanges*" />
-      </method>
-      <method name="GetType" cname="webkit_dom_media_controller_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="GetVolume" cname="webkit_dom_media_controller_get_volume">
-        <return-type type="gdouble" />
-      </method>
-      <method name="Pause" cname="webkit_dom_media_controller_pause">
-        <return-type type="void" />
-      </method>
-      <method name="Play" cname="webkit_dom_media_controller_play">
-        <return-type type="void" />
-      </method>
-      <method name="SetCurrentTime" cname="webkit_dom_media_controller_set_current_time">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gdouble" name="value" />
-        </parameters>
-      </method>
-      <method name="SetDefaultPlaybackRate" cname="webkit_dom_media_controller_set_default_playback_rate">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gdouble" name="value" />
-        </parameters>
-      </method>
-      <method name="SetMuted" cname="webkit_dom_media_controller_set_muted">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gboolean" name="value" />
-        </parameters>
-      </method>
-      <method name="SetPlaybackRate" cname="webkit_dom_media_controller_set_playback_rate">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gdouble" name="value" />
-        </parameters>
-      </method>
-      <method name="SetVolume" cname="webkit_dom_media_controller_set_volume">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="gdouble" name="value" />
-          <parameter type="GError**" name="error" />
-        </parameters>
-      </method>
-      <method name="Unpause" cname="webkit_dom_media_controller_unpause">
-        <return-type type="void" />
       </method>
     </object>
     <object name="DOMMediaError" cname="WebKitDOMMediaError" parent="WebKitDOMObject">
@@ -7499,7 +7320,14 @@
           <parameter type="WebKitDOMNode*" name="other" />
         </parameters>
       </method>
-      <method name="GetAttributes" cname="webkit_dom_node_get_attributes" deprecated="1">
+      <method name="DispatchEvent" cname="webkit_dom_node_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="event" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
+      <method name="GetAttributes" cname="webkit_dom_node_get_attributes">
         <return-type type="WebKitDOMNamedNodeMap*" />
       </method>
       <method name="GetBaseUri" cname="webkit_dom_node_get_base_uri">
@@ -7553,7 +7381,7 @@
       <method name="GetType" cname="webkit_dom_node_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="HasAttributes" cname="webkit_dom_node_has_attributes" deprecated="1">
+      <method name="HasAttributes" cname="webkit_dom_node_has_attributes">
         <return-type type="gboolean" />
       </method>
       <method name="HasChildNodes" cname="webkit_dom_node_has_child_nodes">
@@ -7729,7 +7557,7 @@
       <class_struct cname="WebKitDOMPerformanceClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
-      <method name="GetMemory" cname="webkit_dom_performance_get_memory" deprecated="1">
+      <method name="GetMemory" cname="webkit_dom_performance_get_memory">
         <return-type type="void*" />
       </method>
       <method name="GetNavigation" cname="webkit_dom_performance_get_navigation">
@@ -7864,11 +7692,11 @@
         <return-type type="guint64" />
       </method>
     </object>
-    <object name="DOMProcessingInstruction" cname="WebKitDOMProcessingInstruction" parent="WebKitDOMCharacterData">
+    <object name="DOMProcessingInstruction" cname="WebKitDOMProcessingInstruction" parent="WebKitDOMNode">
       <class_struct cname="WebKitDOMProcessingInstructionClass">
-        <field name="ParentClass" cname="parent_class" type="WebKitDOMCharacterDataClass" />
+        <field name="ParentClass" cname="parent_class" type="WebKitDOMNodeClass" />
       </class_struct>
-      <method name="GetData" cname="webkit_dom_processing_instruction_get_data" deprecated="1">
+      <method name="GetData" cname="webkit_dom_processing_instruction_get_data">
         <return-type type="gchar*" />
       </method>
       <method name="GetSheet" cname="webkit_dom_processing_instruction_get_sheet">
@@ -7880,7 +7708,7 @@
       <method name="GetType" cname="webkit_dom_processing_instruction_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="SetData" cname="webkit_dom_processing_instruction_set_data" deprecated="1">
+      <method name="SetData" cname="webkit_dom_processing_instruction_set_data">
         <return-type type="void" />
         <parameters>
           <parameter type="const-gchar*" name="value" />
@@ -8371,14 +8199,18 @@
           <parameter type="WebKitDOMTextTrackCue*" name="cue" />
         </parameters>
       </method>
+      <method name="DispatchEvent" cname="webkit_dom_text_track_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetActiveCues" cname="webkit_dom_text_track_get_active_cues">
         <return-type type="WebKitDOMTextTrackCueList*" />
       </method>
       <method name="GetCues" cname="webkit_dom_text_track_get_cues">
         <return-type type="WebKitDOMTextTrackCueList*" />
-      </method>
-      <method name="GetId" cname="webkit_dom_text_track_get_id">
-        <return-type type="gchar*" />
       </method>
       <method name="GetKind" cname="webkit_dom_text_track_get_kind">
         <return-type type="gchar*" />
@@ -8413,6 +8245,13 @@
       <class_struct cname="WebKitDOMTextTrackCueClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_text_track_cue_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetAlign" cname="webkit_dom_text_track_cue_get_align">
         <return-type type="gchar*" />
       </method>
@@ -8556,14 +8395,15 @@
       <class_struct cname="WebKitDOMTextTrackListClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_text_track_list_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetLength" cname="webkit_dom_text_track_list_get_length">
         <return-type type="gulong" />
-      </method>
-      <method name="GetTrackById" cname="webkit_dom_text_track_list_get_track_by_id">
-        <return-type type="WebKitDOMTextTrack*" />
-        <parameters>
-          <parameter type="const-gchar*" name="id" />
-        </parameters>
       </method>
       <method name="GetType" cname="webkit_dom_text_track_list_get_type" shared="true">
         <return-type type="GType" />
@@ -8598,50 +8438,6 @@
           <parameter type="gulong" name="index" />
           <parameter type="GError**" name="error" />
         </parameters>
-      </method>
-    </object>
-    <object name="DOMTouch" cname="WebKitDOMTouch" parent="WebKitDOMObject">
-      <class_struct cname="WebKitDOMTouchClass">
-        <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
-      </class_struct>
-      <method name="GetClientX" cname="webkit_dom_touch_get_client_x">
-        <return-type type="glong" />
-      </method>
-      <method name="GetClientY" cname="webkit_dom_touch_get_client_y">
-        <return-type type="glong" />
-      </method>
-      <method name="GetIdentifier" cname="webkit_dom_touch_get_identifier">
-        <return-type type="gulong" />
-      </method>
-      <method name="GetPageX" cname="webkit_dom_touch_get_page_x">
-        <return-type type="glong" />
-      </method>
-      <method name="GetPageY" cname="webkit_dom_touch_get_page_y">
-        <return-type type="glong" />
-      </method>
-      <method name="GetScreenX" cname="webkit_dom_touch_get_screen_x">
-        <return-type type="glong" />
-      </method>
-      <method name="GetScreenY" cname="webkit_dom_touch_get_screen_y">
-        <return-type type="glong" />
-      </method>
-      <method name="GetTarget" cname="webkit_dom_touch_get_target">
-        <return-type type="WebKitDOMEventTarget*" />
-      </method>
-      <method name="GetType" cname="webkit_dom_touch_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="GetWebkitForce" cname="webkit_dom_touch_get_webkit_force">
-        <return-type type="gfloat" />
-      </method>
-      <method name="GetWebkitRadiusX" cname="webkit_dom_touch_get_webkit_radius_x">
-        <return-type type="glong" />
-      </method>
-      <method name="GetWebkitRadiusY" cname="webkit_dom_touch_get_webkit_radius_y">
-        <return-type type="glong" />
-      </method>
-      <method name="GetWebkitRotationAngle" cname="webkit_dom_touch_get_webkit_rotation_angle">
-        <return-type type="gfloat" />
       </method>
     </object>
     <object name="DOMTrackEvent" cname="WebKitDOMTrackEvent" parent="WebKitDOMEvent">
@@ -8786,29 +8582,6 @@
         <return-type type="gboolean" />
       </method>
     </object>
-    <object name="DOMVideoPlaybackQuality" cname="WebKitDOMVideoPlaybackQuality" parent="WebKitDOMObject">
-      <class_struct cname="WebKitDOMVideoPlaybackQualityClass">
-        <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
-      </class_struct>
-      <method name="GetCorruptedVideoFrames" cname="webkit_dom_video_playback_quality_get_corrupted_video_frames">
-        <return-type type="gulong" />
-      </method>
-      <method name="GetCreationTime" cname="webkit_dom_video_playback_quality_get_creation_time">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetDroppedVideoFrames" cname="webkit_dom_video_playback_quality_get_dropped_video_frames">
-        <return-type type="gulong" />
-      </method>
-      <method name="GetTotalFrameDelay" cname="webkit_dom_video_playback_quality_get_total_frame_delay">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetTotalVideoFrames" cname="webkit_dom_video_playback_quality_get_total_video_frames">
-        <return-type type="gulong" />
-      </method>
-      <method name="GetType" cname="webkit_dom_video_playback_quality_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-    </object>
     <object name="DOMVideoTrack" cname="WebKitDOMVideoTrack" parent="WebKitDOMObject">
       <class_struct cname="WebKitDOMVideoTrackClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
@@ -8842,6 +8615,13 @@
       <class_struct cname="WebKitDOMVideoTrackListClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_video_track_list_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="evt" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetLength" cname="webkit_dom_video_track_list_get_length">
         <return-type type="gulong" />
       </method>
@@ -8865,7 +8645,17 @@
       <class_struct cname="WebKitDOMWebKitNamedFlowClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
       </class_struct>
+      <method name="DispatchEvent" cname="webkit_dom_webkit_named_flow_dispatch_event">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="WebKitDOMEvent*" name="event" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
       <method name="GetContent" cname="webkit_dom_webkit_named_flow_get_content">
+        <return-type type="WebKitDOMNodeList*" />
+      </method>
+      <method name="GetContentNodes" cname="webkit_dom_webkit_named_flow_get_content_nodes">
         <return-type type="WebKitDOMNodeList*" />
       </method>
       <method name="GetFirstEmptyRegionIndex" cname="webkit_dom_webkit_named_flow_get_first_empty_region_index">
@@ -8873,6 +8663,9 @@
       </method>
       <method name="GetName" cname="webkit_dom_webkit_named_flow_get_name">
         <return-type type="gchar*" />
+      </method>
+      <method name="GetOverflow" cname="webkit_dom_webkit_named_flow_get_overflow">
+        <return-type type="gboolean" />
       </method>
       <method name="GetOverset" cname="webkit_dom_webkit_named_flow_get_overset">
         <return-type type="gboolean" />
@@ -8884,6 +8677,12 @@
         <return-type type="WebKitDOMNodeList*" />
         <parameters>
           <parameter type="WebKitDOMNode*" name="contentNode" />
+        </parameters>
+      </method>
+      <method name="GetRegionsByContentNode" cname="webkit_dom_webkit_named_flow_get_regions_by_content_node">
+        <return-type type="WebKitDOMNodeList*" />
+        <parameters>
+          <parameter type="WebKitDOMNode*" name="content_node" />
         </parameters>
       </method>
       <method name="GetType" cname="webkit_dom_webkit_named_flow_get_type" shared="true">
@@ -8913,54 +8712,6 @@
         <return-type type="void" />
         <parameters>
           <parameter type="gfloat" name="value" />
-        </parameters>
-      </method>
-    </object>
-    <object name="DOMWheelEvent" cname="WebKitDOMWheelEvent" parent="WebKitDOMMouseEvent">
-      <class_struct cname="WebKitDOMWheelEventClass">
-        <field name="ParentClass" cname="parent_class" type="WebKitDOMMouseEventClass" />
-      </class_struct>
-      <method name="GetDeltaMode" cname="webkit_dom_wheel_event_get_delta_mode">
-        <return-type type="gulong" />
-      </method>
-      <method name="GetDeltaX" cname="webkit_dom_wheel_event_get_delta_x">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetDeltaY" cname="webkit_dom_wheel_event_get_delta_y">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetDeltaZ" cname="webkit_dom_wheel_event_get_delta_z">
-        <return-type type="gdouble" />
-      </method>
-      <method name="GetType" cname="webkit_dom_wheel_event_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="GetWebkitDirectionInvertedFromDevice" cname="webkit_dom_wheel_event_get_webkit_direction_inverted_from_device">
-        <return-type type="gboolean" />
-      </method>
-      <method name="GetWheelDelta" cname="webkit_dom_wheel_event_get_wheel_delta">
-        <return-type type="glong" />
-      </method>
-      <method name="GetWheelDeltaX" cname="webkit_dom_wheel_event_get_wheel_delta_x">
-        <return-type type="glong" />
-      </method>
-      <method name="GetWheelDeltaY" cname="webkit_dom_wheel_event_get_wheel_delta_y">
-        <return-type type="glong" />
-      </method>
-      <method name="InitWheelEvent" cname="webkit_dom_wheel_event_init_wheel_event">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="glong" name="wheelDeltaX" />
-          <parameter type="glong" name="wheelDeltaY" />
-          <parameter type="WebKitDOMDOMWindow*" name="view" />
-          <parameter type="glong" name="screenX" />
-          <parameter type="glong" name="screenY" />
-          <parameter type="glong" name="clientX" />
-          <parameter type="glong" name="clientY" />
-          <parameter type="gboolean" name="ctrlKey" />
-          <parameter type="gboolean" name="altKey" />
-          <parameter type="gboolean" name="shiftKey" />
-          <parameter type="gboolean" name="metaKey" />
         </parameters>
       </method>
     </object>
@@ -10627,6 +10378,8 @@
       </method>
       <constructor cname="webkit_web_window_features_new" />
     </object>
+    <struct name="DOMCustom" cname="WebKitDOMCustom" opaque="true" />
+    <struct name="DOMCustomClass" cname="WebKitDOMCustomClass" opaque="true" />
     <struct name="DOMEventTargetClass" cname="WebKitDOMEventTargetClass" opaque="true" />
     <struct name="HitTestResult" cname="WebKitHitTestResult" opaque="true">
       <method name="ContextGetType" cname="webkit_hit_test_result_context_get_type" shared="true">
@@ -10799,78 +10552,78 @@
       </method>
     </class>
     <class name="Dom" cname="WebkitDom_">
-      <method name="BarInfoGetType" cname="webkit_dom_bar_info_get_type" deprecated="1" shared="true">
+      <method name="BarInfoGetType" cname="webkit_dom_bar_info_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="BarInfoGetVisible" cname="webkit_dom_bar_info_get_visible" deprecated="1" shared="true">
+      <method name="BarInfoGetVisible" cname="webkit_dom_bar_info_get_visible" shared="true">
         <return-type type="gboolean" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="HtmlPropertiesCollectionGetLength" cname="webkit_dom_html_properties_collection_get_length" deprecated="1" shared="true">
+      <method name="HtmlPropertiesCollectionGetLength" cname="webkit_dom_html_properties_collection_get_length" shared="true">
         <return-type type="gulong" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="HtmlPropertiesCollectionGetNames" cname="webkit_dom_html_properties_collection_get_names" deprecated="1" shared="true">
+      <method name="HtmlPropertiesCollectionGetNames" cname="webkit_dom_html_properties_collection_get_names" shared="true">
         <return-type type="WebKitDOMDOMStringList*" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="HtmlPropertiesCollectionGetType" cname="webkit_dom_html_properties_collection_get_type" deprecated="1" shared="true">
+      <method name="HtmlPropertiesCollectionGetType" cname="webkit_dom_html_properties_collection_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="HtmlPropertiesCollectionItem" cname="webkit_dom_html_properties_collection_item" deprecated="1" shared="true">
+      <method name="HtmlPropertiesCollectionItem" cname="webkit_dom_html_properties_collection_item" shared="true">
         <return-type type="WebKitDOMNode*" />
         <parameters>
           <parameter type="void*" name="self" />
           <parameter type="gulong" name="index" />
         </parameters>
       </method>
-      <method name="HtmlPropertiesCollectionNamedItem" cname="webkit_dom_html_properties_collection_named_item" deprecated="1" shared="true">
+      <method name="HtmlPropertiesCollectionNamedItem" cname="webkit_dom_html_properties_collection_named_item" shared="true">
         <return-type type="void*" />
         <parameters>
           <parameter type="void*" name="self" />
           <parameter type="const-gchar*" name="name" />
         </parameters>
       </method>
-      <method name="MemoryInfoGetJsHeapSizeLimit" cname="webkit_dom_memory_info_get_js_heap_size_limit" deprecated="1" shared="true">
+      <method name="MemoryInfoGetJsHeapSizeLimit" cname="webkit_dom_memory_info_get_js_heap_size_limit" shared="true">
         <return-type type="gulong" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="MemoryInfoGetTotalJsHeapSize" cname="webkit_dom_memory_info_get_total_js_heap_size" deprecated="1" shared="true">
+      <method name="MemoryInfoGetTotalJsHeapSize" cname="webkit_dom_memory_info_get_total_js_heap_size" shared="true">
         <return-type type="gulong" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="MemoryInfoGetType" cname="webkit_dom_memory_info_get_type" deprecated="1" shared="true">
+      <method name="MemoryInfoGetType" cname="webkit_dom_memory_info_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="MemoryInfoGetUsedJsHeapSize" cname="webkit_dom_memory_info_get_used_js_heap_size" deprecated="1" shared="true">
+      <method name="MemoryInfoGetUsedJsHeapSize" cname="webkit_dom_memory_info_get_used_js_heap_size" shared="true">
         <return-type type="gulong" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="MicroDataItemValueGetType" cname="webkit_dom_micro_data_item_value_get_type" deprecated="1" shared="true">
+      <method name="MicroDataItemValueGetType" cname="webkit_dom_micro_data_item_value_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="PropertyNodeListGetLength" cname="webkit_dom_property_node_list_get_length" deprecated="1" shared="true">
+      <method name="PropertyNodeListGetLength" cname="webkit_dom_property_node_list_get_length" shared="true">
         <return-type type="gulong" />
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
       </method>
-      <method name="PropertyNodeListGetType" cname="webkit_dom_property_node_list_get_type" deprecated="1" shared="true">
+      <method name="PropertyNodeListGetType" cname="webkit_dom_property_node_list_get_type" shared="true">
         <return-type type="GType" />
       </method>
-      <method name="PropertyNodeListItem" cname="webkit_dom_property_node_list_item" deprecated="1" shared="true">
+      <method name="PropertyNodeListItem" cname="webkit_dom_property_node_list_item" shared="true">
         <return-type type="WebKitDOMNode*" />
         <parameters>
           <parameter type="void*" name="self" />
