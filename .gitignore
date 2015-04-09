@@ -1,0 +1,14 @@
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.guess
+config.sub
+configure
+doc/Makefile.in
+install-sh
+missing
+samples/Makefile.in
+sources/Makefile.in
+sources/webkitgtk-3.0/
+stamp-h
+
