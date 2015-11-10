@@ -22,4 +22,7 @@ sources/Makefile
 sources/webkitgtk3-sharp-3.0.pc
 sources/webkitgtk3-sharp.dll.config
 webkitgtk3-sharp.spec
+sources/generated-stamp
+sources/webkitgtk3-sharp-api.xml
+sources/webkitgtk3-sharp.dll
 

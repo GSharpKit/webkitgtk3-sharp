@@ -67,6 +67,14 @@
 	<!-- Add missing signal in WebView -->
 	<add-node path="/api/namespace/object[@cname='WebKitWebView']">
 
+                <signal name="UserChangedContents" cname="user-changed-contents" when="FIRST">
+                        <return-type type="void" />
+                        <parameters>
+                                <parameter type="WebKitWebView*" name="webview" />
+                        </parameters>
+                </signal>
+
+
 		<!-- Since: 1.1.23 -->
 		<signal name="GeolocationPolicyDecisionCancelled" cname="geolocation-policy-decision-cancelled" when="LAST">
 			<return-type type="void" />
