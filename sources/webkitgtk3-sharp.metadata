@@ -67,19 +67,15 @@
 	<!-- Add missing signal in WebView -->
 	<add-node path="/api/namespace/object[@cname='WebKitWebView']">
 
-                <signal name="UserChangedContents" cname="user-changed-contents" when="FIRST">
-                        <return-type type="void" />
-                        <parameters>
-                                <parameter type="WebKitWebView*" name="webview" />
-                        </parameters>
-                </signal>
+		<signal name="UserChangedContents" cname="user-changed-contents" when="FIRST">
+			<return-type type="void" />
+		</signal>
 
 
 		<!-- Since: 1.1.23 -->
 		<signal name="GeolocationPolicyDecisionCancelled" cname="geolocation-policy-decision-cancelled" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
@@ -87,7 +83,6 @@
 		<signal name="GeolocationPolicyDecisionRequested" cname="geolocation-policy-decision-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="WebKitGeolocationPolicyDecision*" name="policy_decision" />
 			</parameters>
@@ -97,7 +92,6 @@
 		<signal name="IconLoaded" cname="icon-loaded" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="const-gchar*" name="icon_uri" />
 			</parameters>
 		</signal>
@@ -108,7 +102,6 @@
 		<signal name="DatabaseQuotaExceeded" cname="database-quota-exceeded" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="GObject*" name="frame" />
 				<parameter type="GObject*" name="database" />
 			</parameters>
@@ -117,7 +110,6 @@
 		<signal name="ResourceRequestStarting" cname="resource-request-starting" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="web_frame" />
 				<parameter type="WebKitWebResource*" name="web_resource" />
 				<parameter type="WebKitNetworkRequest*" name="request" />
@@ -128,16 +120,12 @@
 		<!-- Since: 1.1.11 -->
 		<signal name="CloseWebView" cname="close-web-view" when="LAST">
 			<return-type type="gboolean" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 
 		<!-- Since: 1.1.8 -->
 		<signal name="CreatePluginWidget" cname="create-plugin-widget" when="LAST">
 			<return-type type="GtkWidget*" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="const-gchar*" name="mime_type" />
 				<parameter type="const-gchar*" name="uri" />
 				<parameter type="GHashTable*" name="param" />
@@ -148,7 +136,6 @@
 		<signal name="LoadError" cname="load-error" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="const-gchar*" name="uri" />
 				<parameter type="gchar**" name="web_error" />
@@ -159,7 +146,6 @@
 		<signal name="PrintRequested" cname="print-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
@@ -168,7 +154,6 @@
 		<signal name="NewWindowPolicyDecisionRequested" cname="new-window-policy-decision-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="WebKitNetworkRequest*" name="request" />
 				<parameter type="WebKitWebNavigationAction*" name="navigation" />
@@ -179,7 +164,6 @@
 		<signal name="MovedCursor" cname="move-cursor" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="GtkMovementStep*" name="step" />
 				<parameter type="gint" name="count" />
 			</parameters>
@@ -189,7 +173,6 @@
 		<signal name="DownloadRequested" cname="download-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitDownload*" name="download" />
 			</parameters>
 		</signal>
@@ -198,7 +181,6 @@
 		<signal name="NavigationPolicyDecisionRequested" cname="navigation-policy-decision-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<!-- parameter type="WebKitWebView*" name="webview" / -->
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="WebKitNetworkRequest*" name="request" />
 				<parameter type="WebKitWebNavigationAction*" name="navigation" />
@@ -209,7 +191,6 @@
 		<signal name="MimeTypePolicyDecisionRequested" cname="mime-type-policy-decision-requested" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="WebKitNetworkRequest*" name="request" />
 				<parameter type="const-gchar*" name="mimetype" />
@@ -220,23 +201,18 @@
 		<signal name="CreateWebView" cname="create-web-view" when="LAST">
 			<return-type type="WebKitWebView*" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
 
 		<signal name="WebViewReady" cname="web-view-ready" when="LAST">
 			<return-type type="gboolean" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 
 		<!-- From 0.2 -->
 		<signal name="NavigationRequested" cname="navigation-requested" when="LAST">
 			<return-type type="gint" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="WebKitNetworkRequest" name="request" />
 			</parameters>
@@ -245,7 +221,6 @@
 		<signal name="WindowObjectCleared" cname="window-object-cleared" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="gpointer" name="context" /> <!-- TODO: check the right type -->
 				<parameter type="gpointer" name="window_object" /> <!-- TODO: check the right type -->
@@ -255,7 +230,6 @@
 		<signal name="LoadStarted" cname="load-started" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
@@ -263,7 +237,6 @@
 		<signal name="LoadCommitted" cname="load-committed" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
@@ -271,7 +244,6 @@
 		<signal name="LoadProgressChanged" cname="load-progress-changed" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="gint" name="progress" />
 			</parameters>
 		</signal>
@@ -279,7 +251,6 @@
 		<signal name="LoadFinished" cname="load-finished" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 			</parameters>
 		</signal>
@@ -287,7 +258,6 @@
 		<signal name="TitleChanged" cname="title-changed" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="const-gchar*" name="title" />
 			</parameters>
@@ -296,7 +266,6 @@
 		<signal name="HoveringOverLink" cname="hovering-over-link" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="const-gchar*" name="title" />
 				<parameter type="const-gchar*" name="link" />
 			</parameters>
@@ -305,7 +274,6 @@
 		<signal name="PopulatePopup" cname="populate-popup" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="GtkMenu" name="menu" />
 			</parameters>
 		</signal>
@@ -313,22 +281,17 @@
 		<signal name="StatusBarTextChanged" cname="status-bar-text-changed" when="LAST">
 			<return-type type="void" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="const-gchar*" name="value" />
 			</parameters>
 		</signal>
 
 		<signal name="SelectionChanged" cname="selection-changed" when="LAST">
 			<return-type type="void" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 
 		<signal name="ConsoleMessage" cname="console-message" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="const-gchar*" name="message" />
 				<parameter type="gint" name="line" />
 				<parameter type="const-gchar*" name="source_id" />
@@ -338,7 +301,6 @@
 		<signal name="ScriptAlert" cname="script-alert" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="const-gchar*" name="message" />
 			</parameters>
@@ -347,7 +309,6 @@
 		<signal name="ScriptConfirm" cname="script-confirm" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="const-gchar*" name="message" />
 				<parameter type="gboolean" name="confirmed" />
@@ -357,7 +318,6 @@
 		<signal name="ScriptPrompt" cname="script-prompt" when="LAST">
 			<return-type type="gboolean" />
 			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
 				<parameter type="WebKitWebFrame*" name="frame" />
 				<parameter type="const-gchar*" name="message" />
 				<parameter type="const-gchar*" name="default_value" />
@@ -367,30 +327,18 @@
 		
 		<signal name="SelectedAll" cname="select-all" when="LAST">
 			<return-type type="void" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 		
 		<signal name="ClipboardCut" cname="cut-clipboard" when="LAST">
 			<return-type type="void" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 		
 		<signal name="ClipboardCopy" cname="copy-clipboard" when="LAST">
 			<return-type type="void" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 		
 		<signal name="PastedClipboard" cname="paste-clipboard" when="LAST">
 			<return-type type="void" />
-			<parameters>
-				<parameter type="WebKitWebView*" name="webview" />
-			</parameters>
 		</signal>
 		
 	</add-node>
