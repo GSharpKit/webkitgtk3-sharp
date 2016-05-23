@@ -6,7 +6,7 @@ Release:	1%{?dist}
 Summary:	.NET bindings for WebKit
 Group:		Development/Languages
 License:	MIT
-URL:		https://github.com/structurait/webkitgtk3-sharp.git
+URL:		https://github.com/openmedicus/webkitgtk3-sharp.git
 Source0:        webkitgtk3-sharp-%{version}.tar.xz
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -24,20 +24,6 @@ Requires:	webkitgtk3 >= %{version}
 
 %description
 webkitgtk-sharp is .NET bindings for the WebKit rendering engine.
-
-%package devel
-Summary:	Development files for webkitgtk-sharp
-Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	pkgconfig
-
-Obsoletes:      webkit-sharp-devel
-Provides:       webkit-sharp-devel = %{version}-%{release}
-
-Requires:       webkitgtk3-devel >= %{version}
-
-%description devel
-Development files for webkitgtk-sharp
 
 %prep
 %setup -q
@@ -58,15 +44,12 @@ make DESTDIR=%{buildroot} install
 %defattr(-,root,root,-)
 %doc COPYING README
 %{_prefix}/lib/mono/
-
-%files devel
-%defattr(-,root,root,-)
-%{_libdir}/pkgconfig/webkitgtk3-sharp-3.0.pc
+%{_datadir}/pkgconfig/webkitgtk3-sharp-3.0.pc
 %{_prefix}/lib/monodoc/sources/webkitgtk3-sharp*
 
 %changelog
-* Sat May 5 2013 Mikkel Kruse Johnsen <mikkel@structura-it.dk> - 2.0.1-1
+* Sat May 5 2013 Mikkel Kruse Johnsen <mikkel@xmedicus.com> - 2.0.1-1
 - Updated to 2.0.1 and moved to own git
 
-* Sat Jan 5 2013 Mikkel Kruse Johnsen <mikkel@structura-it.dk> - 1.4.0-1
+* Sat Jan 5 2013 Mikkel Kruse Johnsen <mikkel@xmedicus.com> - 1.4.0-1
 - Initial package
