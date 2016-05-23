@@ -25,3 +25,9 @@ sources/generated-stamp
 sources/webkitgtk3-sharp-api.xml
 sources/webkitgtk3-sharp.dll
 stamp-h
+doc/webkitgtk3-sharp-docs.source
+doc/webkitgtk3-sharp-docs.tree
+doc/webkitgtk3-sharp-docs.zip
+samples/funnybrowser.exe
+samples/webkitgtk3-sharp.dll
+
