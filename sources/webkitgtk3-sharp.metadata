@@ -67,10 +67,15 @@
 	<!-- Add missing signal in WebView -->
 	<add-node path="/api/namespace/object[@cname='WebKitWebView']">
 
-		<signal name="UserChangedContents" cname="user-changed-contents" when="FIRST">
-			<return-type type="void" />
-		</signal>
-
+                <!-- Since: 1.10 -->
+                <signal name="ContextMenu" cname="context-menu" when="LAST">
+                        <return-type type="gboolean" />
+                        <parameters>
+                                <parameter type="GtkWidget*" name="default_menu" />
+                                <parameter type="WebKitHitTestResult*" name="hit_test_result" />
+                                <parameter type="gboolean" name="triggered_with_keyboard" />
+                        </parameters>
+                </signal>
 
 		<!-- Since: 1.1.23 -->
 		<signal name="GeolocationPolicyDecisionCancelled" cname="geolocation-policy-decision-cancelled" when="LAST">
@@ -210,6 +215,10 @@
 		</signal>
 
 		<!-- From 0.2 -->
+                <signal name="UserChangedContents" cname="user-changed-contents" when="FIRST">
+                        <return-type type="void" />
+                </signal>
+
 		<signal name="NavigationRequested" cname="navigation-requested" when="LAST">
 			<return-type type="gint" />
 			<parameters>

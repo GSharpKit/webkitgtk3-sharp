@@ -3,9 +3,13 @@
   <api filename="webkitgtk3-sharp-api.raw">
     <library name="webkitgtk-3.0">
       <namespace name="WebKit">
-        <!--<dir>/usr/include/webkitgtk-3.0/webkit</dir>-->
-        <dir>webkitgtk-3.0/webkit</dir>
-        <dir>webkitgtk-3.0/webkitdom</dir>
+	<directory path="webkitgtk-3.0/webkit">
+	</directory>
+	<directory path="webkitgtk-3.0/webkitdom">
+		<exclude>WebKitDOMHTMLPropertiesCollection.h</exclude>
+		<exclude>WebKitDOMMemoryInfo.h</exclude>
+		<exclude>WebKitDOMPropertyNodeList.h</exclude>
+	</directory>
       </namespace>
     </library>
   </api>

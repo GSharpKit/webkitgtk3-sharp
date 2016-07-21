@@ -300,6 +300,17 @@
         </parameters>
       </method>
     </object>
+    <object name="DOMBarInfo" cname="WebKitDOMBarInfo">
+      <method name="GetType" cname="webkit_dom_bar_info_get_type" deprecated="1" shared="true">
+        <return-type type="GType" />
+      </method>
+      <method name="GetVisible" cname="webkit_dom_bar_info_get_visible" deprecated="1" shared="true">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="void*" name="self" />
+        </parameters>
+      </method>
+    </object>
     <object name="DOMBarProp" cname="WebKitDOMBarProp" parent="WebKitDOMObject">
       <class_struct cname="WebKitDOMBarPropClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
@@ -7233,6 +7244,11 @@
         <return-type type="GType" />
       </method>
     </object>
+    <object name="DOMMicroDataItemValue" cname="WebKitDOMMicroDataItemValue">
+      <method name="GetType" cname="webkit_dom_micro_data_item_value_get_type" shared="true">
+        <return-type type="GType" />
+      </method>
+    </object>
     <object name="DOMMouseEvent" cname="WebKitDOMMouseEvent" parent="WebKitDOMUIEvent">
       <class_struct cname="WebKitDOMMouseEventClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMUIEventClass" />
@@ -10799,15 +10815,6 @@
       </method>
     </class>
     <class name="Dom" cname="WebkitDom_">
-      <method name="BarInfoGetType" cname="webkit_dom_bar_info_get_type" deprecated="1" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="BarInfoGetVisible" cname="webkit_dom_bar_info_get_visible" deprecated="1" shared="true">
-        <return-type type="gboolean" />
-        <parameters>
-          <parameter type="void*" name="self" />
-        </parameters>
-      </method>
       <method name="HtmlPropertiesCollectionGetLength" cname="webkit_dom_html_properties_collection_get_length" deprecated="1" shared="true">
         <return-type type="gulong" />
         <parameters>
@@ -10857,9 +10864,6 @@
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
-      </method>
-      <method name="MicroDataItemValueGetType" cname="webkit_dom_micro_data_item_value_get_type" deprecated="1" shared="true">
-        <return-type type="GType" />
       </method>
       <method name="PropertyNodeListGetLength" cname="webkit_dom_property_node_list_get_length" deprecated="1" shared="true">
         <return-type type="gulong" />
