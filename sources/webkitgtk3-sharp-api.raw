@@ -300,17 +300,6 @@
         </parameters>
       </method>
     </object>
-    <object name="DOMBarInfo" cname="WebKitDOMBarInfo">
-      <method name="GetType" cname="webkit_dom_bar_info_get_type" deprecated="1" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="GetVisible" cname="webkit_dom_bar_info_get_visible" deprecated="1" shared="true">
-        <return-type type="gboolean" />
-        <parameters>
-          <parameter type="void*" name="self" />
-        </parameters>
-      </method>
-    </object>
     <object name="DOMBarProp" cname="WebKitDOMBarProp" parent="WebKitDOMObject">
       <class_struct cname="WebKitDOMBarPropClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMObjectClass" />
@@ -7244,11 +7233,6 @@
         <return-type type="GType" />
       </method>
     </object>
-    <object name="DOMMicroDataItemValue" cname="WebKitDOMMicroDataItemValue">
-      <method name="GetType" cname="webkit_dom_micro_data_item_value_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-    </object>
     <object name="DOMMouseEvent" cname="WebKitDOMMouseEvent" parent="WebKitDOMUIEvent">
       <class_struct cname="WebKitDOMMouseEventClass">
         <field name="ParentClass" cname="parent_class" type="WebKitDOMUIEventClass" />
@@ -9140,75 +9124,6 @@
         <return-type type="void" />
       </method>
     </object>
-    <object name="FaviconDatabase" cname="WebKitFaviconDatabase" parent="GObject">
-      <class_struct cname="WebKitFaviconDatabaseClass">
-        <field name="ParentClass" cname="parent_class" type="GObjectClass" />
-        <method vm="_webkit_reserved1" />
-        <method vm="_webkit_reserved2" />
-        <method vm="_webkit_reserved3" />
-        <method vm="_webkit_reserved4" />
-      </class_struct>
-      <field name="Priv" cname="priv" type="WebKitFaviconDatabasePrivate*" />
-      <virtual_method name="WebkitReserved1" cname="_webkit_reserved1" shared="true" padding="true">
-        <return-type type="void" />
-      </virtual_method>
-      <virtual_method name="WebkitReserved2" cname="_webkit_reserved2" shared="true" padding="true">
-        <return-type type="void" />
-      </virtual_method>
-      <virtual_method name="WebkitReserved3" cname="_webkit_reserved3" shared="true" padding="true">
-        <return-type type="void" />
-      </virtual_method>
-      <virtual_method name="WebkitReserved4" cname="_webkit_reserved4" shared="true" padding="true">
-        <return-type type="void" />
-      </virtual_method>
-      <method name="Clear" cname="webkit_favicon_database_clear">
-        <return-type type="void" />
-      </method>
-      <method name="GetFaviconPixbuf" cname="webkit_favicon_database_get_favicon_pixbuf">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="const-gchar*" name="page_uri" />
-          <parameter type="guint" name="width" />
-          <parameter type="guint" name="height" />
-          <parameter type="GCancellable*" name="cancellable" />
-          <parameter type="GAsyncReadyCallback" name="callback" />
-          <parameter type="gpointer" name="user_data" />
-        </parameters>
-      </method>
-      <method name="GetFaviconPixbufFinish" cname="webkit_favicon_database_get_favicon_pixbuf_finish">
-        <return-type type="GdkPixbuf*" />
-        <parameters>
-          <parameter type="GAsyncResult*" name="result" />
-          <parameter type="GError**" name="error" />
-        </parameters>
-      </method>
-      <method name="GetFaviconUri" cname="webkit_favicon_database_get_favicon_uri">
-        <return-type type="gchar*" />
-        <parameters>
-          <parameter type="const-gchar*" name="page_uri" />
-        </parameters>
-      </method>
-      <method name="GetPath" cname="webkit_favicon_database_get_path">
-        <return-type type="const-gchar*" />
-      </method>
-      <method name="GetType" cname="webkit_favicon_database_get_type" shared="true">
-        <return-type type="GType" />
-      </method>
-      <method name="SetPath" cname="webkit_favicon_database_set_path">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="const-gchar*" name="path" />
-        </parameters>
-      </method>
-      <method name="TryGetFaviconPixbuf" cname="webkit_favicon_database_try_get_favicon_pixbuf">
-        <return-type type="GdkPixbuf*" />
-        <parameters>
-          <parameter type="const-gchar*" name="page_uri" />
-          <parameter type="guint" name="width" />
-          <parameter type="guint" name="height" />
-        </parameters>
-      </method>
-    </object>
     <object name="FileChooserRequest" cname="WebKitFileChooserRequest" parent="GObject">
       <class_struct cname="WebKitFileChooserRequestClass">
         <field name="ParentClass" cname="parent_class" type="GObjectClass" />
@@ -10644,6 +10559,8 @@
       <constructor cname="webkit_web_window_features_new" />
     </object>
     <struct name="DOMEventTargetClass" cname="WebKitDOMEventTargetClass" opaque="true" />
+    <struct name="FaviconDatabase" cname="WebKitFaviconDatabase" opaque="true" />
+    <struct name="FaviconDatabaseClass" cname="WebKitFaviconDatabaseClass" opaque="true" />
     <struct name="HitTestResult" cname="WebKitHitTestResult" opaque="true">
       <method name="ContextGetType" cname="webkit_hit_test_result_context_get_type" shared="true">
         <return-type type="GType" />
@@ -10815,6 +10732,15 @@
       </method>
     </class>
     <class name="Dom" cname="WebkitDom_">
+      <method name="BarInfoGetType" cname="webkit_dom_bar_info_get_type" deprecated="1" shared="true">
+        <return-type type="GType" />
+      </method>
+      <method name="BarInfoGetVisible" cname="webkit_dom_bar_info_get_visible" deprecated="1" shared="true">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="void*" name="self" />
+        </parameters>
+      </method>
       <method name="HtmlPropertiesCollectionGetLength" cname="webkit_dom_html_properties_collection_get_length" deprecated="1" shared="true">
         <return-type type="gulong" />
         <parameters>
@@ -10864,6 +10790,9 @@
         <parameters>
           <parameter type="void*" name="self" />
         </parameters>
+      </method>
+      <method name="MicroDataItemValueGetType" cname="webkit_dom_micro_data_item_value_get_type" deprecated="1" shared="true">
+        <return-type type="GType" />
       </method>
       <method name="PropertyNodeListGetLength" cname="webkit_dom_property_node_list_get_length" deprecated="1" shared="true">
         <return-type type="gulong" />

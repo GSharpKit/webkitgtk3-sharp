@@ -4,6 +4,7 @@
     <library name="webkitgtk-3.0">
       <namespace name="WebKit">
 	<directory path="webkitgtk-3.0/webkit">
+		<exclude>webkitfavicondatabase.h</exclude>
 	</directory>
 	<directory path="webkitgtk-3.0/webkitdom">
 		<exclude>WebKitDOMHTMLPropertiesCollection.h</exclude>
