@@ -6,7 +6,7 @@
         Please DO NOT MODIFY THIS FILE, modify .metadata files instead.
 
 -->
-  <namespace name="WebKit" library="webkitgtk-3.0">
+  <namespace name="WebKit" library="libwebkitgtk-3.0-0.dll">
     <enum name="CacheModel" cname="WebKitCacheModel" type="enum">
       <member cname="WEBKIT_CACHE_MODEL_DEFAULT" name="Default" />
       <member cname="WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER" name="DocumentViewer" />

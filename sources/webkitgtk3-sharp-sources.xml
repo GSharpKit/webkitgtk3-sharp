@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <gapi-parser-input>
   <api filename="webkitgtk3-sharp-api.raw">
-    <library name="webkitgtk-3.0">
+    <library name="libwebkitgtk-3.0-0.dll">
       <namespace name="WebKit">
 	<directory path="webkitgtk-3.0/webkit">
 		<exclude>webkitfavicondatabase.h</exclude>
